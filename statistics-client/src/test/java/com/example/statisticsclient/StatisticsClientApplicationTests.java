@@ -9,5 +9,4 @@ class StatisticsClientApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

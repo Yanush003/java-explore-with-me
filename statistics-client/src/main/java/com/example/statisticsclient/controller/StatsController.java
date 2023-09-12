@@ -31,4 +31,3 @@ public class StatsController {
         return ResponseEntity.ok(stats);
     }
 }
-
