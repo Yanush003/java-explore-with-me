@@ -30,9 +30,9 @@ public class StatisticService {
                         .collect(Collectors.toList())
                 :
                 statisticRepository.findViewStatList(start, end, uris)).stream()
-                        .sorted(comparingLong(ViewStats::getHits).reversed())
-                        .map(ViewStatsMapper::toDto)
-                        .collect(Collectors.toList());
+                .sorted(comparingLong(ViewStats::getHits).reversed())
+                .map(ViewStatsMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public EndpointHitDto registerHit(EndpointHitDto dto) {
