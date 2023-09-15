@@ -30,7 +30,7 @@ services:
     build: stat-service/server
     container_name: stat-server-container
     ports:
-      - "9090:9090"
+      - "8080:9090"
     depends_on:
       - stats-db
     environment:
