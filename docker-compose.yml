@@ -3,7 +3,7 @@ services:
 
   ewm-db:
     image: postgres:13
-    container_name: ewn-db-container
+    container_name: ewm-db-container
     volumes:
       - /var/lib/postgresql/data/
     ports:
