@@ -14,11 +14,10 @@ services:
       - POSTGRES_PASSWORD=root
 
 
-  ewm-main:
+  ewm-service:
     build: ewm-main
-    container_name: ewm-main-container
     ports:
-      - "8081:8080"
+      - "8080:8080"
     depends_on:
       - ewm-db
     environment:
@@ -28,9 +27,8 @@ services:
 
   stats-server:
     build: stat-service/server
-    container_name: stat-server-container
     ports:
-      - "9090:8080"
+      - "9090:9090"
     depends_on:
       - stats-db
     environment:
