@@ -17,6 +17,7 @@ public class ViewStats {
         this.uri = uri;
         this.count = count;
     }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
