@@ -15,7 +15,7 @@ public class ViewStats {
     public ViewStats(String app, String uri, Long count) {
         this.app = app;
         this.uri = uri;
-        this.hits = count;
+        this.count = count;
     }
     @Id
     @Column(name = "id")
@@ -23,5 +23,5 @@ public class ViewStats {
     private Long id;
     private String app;
     private String uri;
-    private Long hits;
+    private Long count;
 }
