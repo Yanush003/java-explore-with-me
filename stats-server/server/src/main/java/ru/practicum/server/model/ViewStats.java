@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class ViewStats {
+    public ViewStats(String app, String uri, Long count) {
+        this.app = app;
+        this.uri = uri;
+        this.hits = count;
+    }
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
