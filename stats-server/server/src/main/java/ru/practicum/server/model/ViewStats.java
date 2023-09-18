@@ -22,7 +22,10 @@ public class ViewStats {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "app")
     private String app;
+    @Column(name = "uri")
     private String uri;
+    @Column(name = "hits")
     private Long hits;
 }
