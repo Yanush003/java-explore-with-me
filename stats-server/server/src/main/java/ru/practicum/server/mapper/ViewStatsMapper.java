@@ -10,7 +10,7 @@ public class ViewStatsMapper {
         return ViewStatsDto.builder()
                 .app(vs.getApp())
                 .uri(vs.getUri())
-                .hits(vs.getCount())
+                .hits(vs.getHits())
                 .build();
     }
 }

@@ -12,10 +12,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class ViewStats {
-    public ViewStats(String app, String uri, Long count) {
+    public ViewStats(String app, String uri, Long hits) {
         this.app = app;
         this.uri = uri;
-        this.count = count;
+        this.hits = hits;
     }
 
     @Id
@@ -24,5 +24,5 @@ public class ViewStats {
     private Long id;
     private String app;
     private String uri;
-    private Long count;
+    private Long hits;
 }

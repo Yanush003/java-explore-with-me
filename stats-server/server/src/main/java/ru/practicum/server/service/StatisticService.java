@@ -28,11 +28,11 @@ public class StatisticService {
     public List<ViewStatsDto> getStatList(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         return (unique ?
                 findViewStatListUniqueIp(start, end, uris).stream()
-                        .sorted(comparingLong(ViewStats::getCount).reversed())
+                        .sorted(comparingLong(ViewStats::getHits).reversed())
                         .collect(Collectors.toList())
                 :
                 findViewStatList(start, end, uris)).stream()
-                .sorted(comparingLong(ViewStats::getCount).reversed())
+                .sorted(comparingLong(ViewStats::getHits).reversed())
                 .map(ViewStatsMapper::toDto)
                 .collect(Collectors.toList());
     }
