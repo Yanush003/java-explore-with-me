@@ -9,6 +9,7 @@ import ru.pracitcum.dto.EndpointHitDto;
 import ru.pracitcum.dto.ViewStatsDto;
 
 import java.util.List;
+
 @Service
 public class StatsClient {
     private final WebClient webClient;
