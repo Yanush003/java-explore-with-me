@@ -1,6 +1,7 @@
 package ru.practicum.ewmmain.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import ru.practicum.ewmmain.constant.EventState;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class Event {
     private String description; //Полное описание события
 
     @Column(name = "event_event_date", nullable = false)
-    private LocalDateTime  eventDate; //Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime eventDate; //Дата и время на которые намечено событие (в формате "yyyy-MM-dd HH:mm:ss")
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_initiator_id", nullable = false)
@@ -51,7 +52,7 @@ public class Event {
     //Ограничение на количество участников. Значение 0 - означает отсутствие ограничения
 
     @Column(name = "event_published_on")
-    private LocalDateTime  publishedOn; //Дата и время публикации события (в формате "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime publishedOn; //Дата и время публикации события (в формате "yyyy-MM-dd HH:mm:ss")
 
     @Column(name = "event_request_moderation")
     private Boolean requestModeration; //default: true //Нужна ли пре-модерация заявок на участие

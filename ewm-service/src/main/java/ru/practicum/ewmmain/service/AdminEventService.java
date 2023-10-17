@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pracitcum.dto.ViewStatsDto;
 import ru.practicum.client.StatsClient;
-import ru.practicum.ewmmain.dto.EventFullDto;
 import ru.practicum.ewmmain.constant.EventState;
+import ru.practicum.ewmmain.dto.EventFullDto;
 import ru.practicum.ewmmain.dto.LocationDto;
 import ru.practicum.ewmmain.dto.UpdateEventAdminRequest;
 import ru.practicum.ewmmain.exception.InternalServerErrorException;
@@ -28,9 +28,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.practicum.ewmmain.constant.Constant.DATETIME_FORMAT;
+import static ru.practicum.ewmmain.constant.ParticipationRequestStatus.CONFIRMED;
 import static ru.practicum.ewmmain.constant.StateActionAdmin.PUBLISH_EVENT;
 import static ru.practicum.ewmmain.constant.StateActionAdmin.REJECT_EVENT;
-import static ru.practicum.ewmmain.constant.ParticipationRequestStatus.CONFIRMED;
 import static ru.practicum.ewmmain.mapper.EventMapper.EVENT_MAPPER;
 import static ru.practicum.ewmmain.mapper.LocationMapper.LOCATION_MAPPER;
 
@@ -75,7 +75,7 @@ public class AdminEventService {
 
         if (updateEventAdminRequest.getStateAction() != null) {
             if (updateEventAdminRequest.getStateAction().equals(PUBLISH_EVENT) && !event.getState().equals(EventState.PENDING)) {
-                throw new InternalServerErrorException(""+ event.getState());
+                throw new InternalServerErrorException("" + event.getState());
             }
             if (updateEventAdminRequest.getStateAction().equals(REJECT_EVENT) && event.getState().equals(EventState.PUBLISHED)) {
                 throw new InternalServerErrorException("" + event.getState());

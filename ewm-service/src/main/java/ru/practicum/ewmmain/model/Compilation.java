@@ -27,6 +27,4 @@ public class Compilation {//description: Подборка событий
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events; //Список событий входящих в подборку
 
-
-
 }

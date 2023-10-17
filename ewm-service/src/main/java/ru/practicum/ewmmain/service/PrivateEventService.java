@@ -29,7 +29,7 @@ import static ru.practicum.ewmmain.mapper.ParticipationRequestMapper.REQUEST_MAP
 
 @Service
 @RequiredArgsConstructor
-public class PrivateEventService{
+public class PrivateEventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final EventRepository eventRepository;
