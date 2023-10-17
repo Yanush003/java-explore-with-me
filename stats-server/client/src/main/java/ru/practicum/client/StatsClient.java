@@ -1,39 +1,40 @@
 package ru.practicum.client;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 import ru.pracitcum.dto.EndpointHitDto;
+import ru.pracitcum.dto.ViewStatsDto;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 @Service
-public class StatsClient extends BaseClient {
+public class StatsClient {
+    private final WebClient webClient;
 
-    public StatsClient(@Value("${stats-service.url}") String url, RestTemplateBuilder builder) {
-        super(
-                builder
-                        .uriTemplateHandler(new DefaultUriBuilderFactory(url))
-                        .requestFactory(HttpComponentsClientHttpRequestFactory::new)
-                        .build()
-        );
+    public StatsClient(@Value("${stats.server.url}") String serverUrl) {
+        webClient = WebClient.builder().baseUrl(serverUrl).build();
     }
 
-    public ResponseEntity<Object> getStatistic(String start, String end, List<String> uris, Boolean unique) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("start", start);
-        params.put("end", end);
-        params.put("uris", uris);
-        params.put("unique", unique);
-        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", params);
+    public void createHit(EndpointHitDto endpointHitDto) {
+        webClient.post()
+                .uri("/hit")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(endpointHitDto))
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
 
-    public ResponseEntity<Object> createHit(EndpointHitDto dto) {
-        return post("/hit", dto);
+    public List<ViewStatsDto> getStatistic(String start, String end, List<String> uris, Boolean unique) {
+        String urisAsSting = String.join(",", uris);
+
+        return webClient.get()
+                .uri("/stats?start={start}&end={end}&uris={uris}&unique={unique}", start, end, urisAsSting, unique)
+                .retrieve()
+                .bodyToFlux(ViewStatsDto.class)
+                .collectList()
+                .block();
     }
 }
