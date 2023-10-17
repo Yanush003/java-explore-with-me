@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_short")
 public class UserShort {
-    //description: Пользователь (краткая информация)
     @Id
     private Integer id;
+
     private String name;
 }

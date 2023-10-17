@@ -10,8 +10,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "compilations")
-public class Compilation {//description: Подборка событий
-
+public class Compilation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "compilation_id")
@@ -26,6 +25,5 @@ public class Compilation {//description: Подборка событий
     @ManyToMany
     @JoinTable(name = "compilations_events", joinColumns = @JoinColumn(name = "compilation_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private List<Event> events; //Список событий входящих в подборку
-
+    private List<Event> events;
 }

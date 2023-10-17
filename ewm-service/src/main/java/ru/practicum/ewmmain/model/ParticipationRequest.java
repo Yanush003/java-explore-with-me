@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "participation_requests")
-public class ParticipationRequest {//description: Заявка на участие в событии
-
+public class ParticipationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "participation_request_id")
@@ -31,5 +30,5 @@ public class ParticipationRequest {//description: Заявка на участи
 
     @Enumerated(EnumType.STRING)
     @Column(name = "participation_request_status")
-    private ParticipationRequestStatus status; //Статус заявки
+    private ParticipationRequestStatus status;
 }
