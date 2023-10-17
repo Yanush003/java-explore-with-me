@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "new_event")
 public class NewEvent {//description: Новое событие
+
     @Id
     private Integer id;
     @Size(min = 20, max = 2000)

@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "compilations")
 public class Compilation {//description: Подборка событий
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "compilation_id")

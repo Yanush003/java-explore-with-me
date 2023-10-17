@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "event_short")
 public class EventShort {//description:	Краткая информация о событии
+
     private String annotation; //Краткое описание
     @ManyToOne
     @JoinColumn(name = "category_id")

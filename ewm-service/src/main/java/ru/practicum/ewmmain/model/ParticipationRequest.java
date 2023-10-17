@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "participation_requests")
 public class ParticipationRequest {//description: Заявка на участие в событии
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "participation_request_id")

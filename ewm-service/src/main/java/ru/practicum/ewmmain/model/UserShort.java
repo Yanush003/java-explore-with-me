@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Getter
 @Entity
 @Table(name = "user_short")
-public class UserShort {//description: Пользователь (краткая информация)
+public class UserShort {
+    //description: Пользователь (краткая информация)
     @Id
     private Integer id;
     private String name;
