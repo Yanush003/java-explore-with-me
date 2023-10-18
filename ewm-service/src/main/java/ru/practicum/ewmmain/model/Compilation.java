@@ -13,13 +13,13 @@ import java.util.List;
 public class Compilation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "compilation_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "compilation_title")
+    @Column(name = "title")
     private String title; //Заголовок подборки
 
-    @Column(name = "compilation_pinned")
+    @Column(name = "pinned")
     private Boolean pinned; //Закреплена ли подборка на главной странице сайта
 
     @ManyToMany

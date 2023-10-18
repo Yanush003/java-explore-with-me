@@ -43,7 +43,6 @@ public class AdminEventService {
     private final ParticipationRequestRepository participationRequestRepository;
     private final StatsClient statsClient;
 
-
     public List<EventFullDto> getAllAdmin(List<Long> users, List<EventState> states, List<Long> categories, LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
         Pageable pageable = PageRequest.of(from, size);
         if (rangeStart == null) {
