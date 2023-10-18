@@ -1,10 +1,13 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS locations;
-DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS participation_requests;
-DROP TABLE IF EXISTS compilations;
+DROP TABLE IF EXISTS event_short;
+DROP TABLE IF EXISTS new_event;
+DROP TABLE IF EXISTS event_full;
+DROP TABLE IF EXISTS user_short;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS compilations_events;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS categories;
 
 CREATE TABLE IF NOT EXISTS categories
 (
