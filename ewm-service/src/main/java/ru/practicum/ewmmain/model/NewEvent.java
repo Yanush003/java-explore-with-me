@@ -26,6 +26,7 @@ public class NewEvent {
     @Size(min = 20, max = 7000)
     private String description;
 
+    @Column(name = "event_date")
     private String eventDate;
 
     @ManyToOne
@@ -34,8 +35,10 @@ public class NewEvent {
 
     private Boolean paid;
 
+    @Column(name = "participant_limit")
     private Integer participantLimit;
 
+    @Column(name = "request_moderation")
     private Boolean requestModeration;
 
     @Size(min = 3, max = 120)

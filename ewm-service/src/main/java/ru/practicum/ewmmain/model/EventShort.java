@@ -18,8 +18,10 @@ public class EventShort {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "confirmed_requests")
     private Integer confirmedRequests;
 
+    @Column(name = "event_date")
     private String eventDate;
 
     @Id

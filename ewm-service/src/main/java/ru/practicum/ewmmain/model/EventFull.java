@@ -18,12 +18,15 @@ public class EventFull {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "confirmed_requests")
     private Integer confirmedRequests;
 
+    @Column(name = "created_on")
     private String createdOn;
 
     private String description;
 
+    @Column(name = "event_date")
     private String eventDate;
 
     @Id
@@ -37,13 +40,15 @@ public class EventFull {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @Enumerated(EnumType.STRING)
     private Boolean paid;
 
+    @Column(name = "participant_limit")
     private Integer participantLimit;
 
+    @Column(name = "published_on")
     private String publishedOn;
 
+    @Column(name = "request_moderation")
     private Boolean requestModeration;
 
     private String state;
