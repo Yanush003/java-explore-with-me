@@ -1,6 +1,7 @@
 package ru.practicum.ewmmain.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmmain.constant.SortMode;
@@ -18,6 +19,7 @@ import static ru.practicum.ewmmain.constant.Constant.DATETIME_FORMAT;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class PublicEventsController {
@@ -36,9 +38,8 @@ public class PublicEventsController {
                                       @Valid @RequestParam(defaultValue = "0") @Min(0) int from,
                                       @Valid @RequestParam(defaultValue = "10") @Min(1) int size,
                                       HttpServletRequest request) {
-
-        return publicEventService.getAllPublic(
-                text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
+        log.info("/events success" );
+        return publicEventService.getAllPublic(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
     }
 
     @GetMapping("/{eventId}")

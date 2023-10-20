@@ -20,7 +20,7 @@ public class StatisticController {
     @PostMapping("/hit")
     public ResponseEntity<EndpointHitDto> registerHit(@RequestBody EndpointHitDto hit) {
         EndpointHitDto endpointHitDto = statsService.registerHit(hit);
-        return ResponseEntity.status(200).body(endpointHitDto);
+        return ResponseEntity.status(201).body(endpointHitDto);
     }
 
     @GetMapping("/stats")

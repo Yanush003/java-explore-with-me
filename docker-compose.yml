@@ -6,6 +6,7 @@ services:
     container_name: ewm-stats-server
     ports:
       - "9090:9090"
+      - "5006:5005"
     depends_on:
       - stats-db
     environment:
@@ -29,6 +30,7 @@ services:
     container_name: ewm-main-service
     ports:
       - "8080:8080"
+      - "5007:5005"
     depends_on:
       - ewm-db
       - stats-server
@@ -36,7 +38,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/ewm-stats
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - SERVICES_STATSSERVICE_URI=http://stats-server:9090
+      - STATS_SERVER_URL=http://stats-server:9090
       - JAVA_OPTS=-Djdk.httpclient.HttpClient.log=errors,requests
 
   ewm-db:

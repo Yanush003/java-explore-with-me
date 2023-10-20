@@ -1,6 +1,7 @@
 package ru.practicum.ewmmain.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.pracitcum.dto.EndpointHitDto;
@@ -31,6 +32,7 @@ import static ru.practicum.ewmmain.mapper.EventMapper.EVENT_MAPPER;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PublicEventService {
     private final EventRepository eventRepository;
     private final ParticipationRequestRepository participationRequestRepository;
@@ -44,7 +46,7 @@ public class PublicEventService {
             throw new BadRequestException("");
         }
         statsClient.createHit(EndpointHitDto.builder()
-                .app("ewm")
+                .app("ewm-service")
                 .uri(request.getRequestURI())
                 .ip(request.getRemoteAddr())
                 .timestamp(LocalDateTime.now())
@@ -72,7 +74,8 @@ public class PublicEventService {
                 rangeStart.format(DateTimeFormatter.ofPattern(DATETIME_FORMAT)),
                 rangeEnd.format(DateTimeFormatter.ofPattern(DATETIME_FORMAT)),
                 eventUrls, true);
-        List<EventShortDto> eventShortDtos = events.stream()
+        List<EventShortDto> eventShortDtos = events
+                .stream()
                 .map(EVENT_MAPPER::toShortDto)
                 .peek(eventShortDto -> {
                     Optional<ViewStatsDto> viewStatsDto = viewStatsDtos.stream()
@@ -105,7 +108,7 @@ public class PublicEventService {
             throw new NotFoundException("Event id=" + eventId + " is not published.");
         }
         statsClient.createHit(EndpointHitDto.builder()
-                .app("ewm")
+                .app("ewm-service")
                 .uri(request.getRequestURI())
                 .ip(request.getRemoteAddr())
                 .timestamp(LocalDateTime.now())

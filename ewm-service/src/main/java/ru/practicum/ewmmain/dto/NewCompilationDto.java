@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -13,8 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewCompilationDto { //description: Подборка событий
+
     private List<Long> events; //Список идентификаторов событий входящих в подборку
+
     private Boolean pinned; //default: false Закреплена ли подборка на главной странице сайта
+
+    @NotEmpty
     @Size(min = 1, max = 50)
     private String title; //Заголовок подборки
 }
