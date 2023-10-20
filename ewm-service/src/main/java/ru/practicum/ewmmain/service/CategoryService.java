@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmmain.dto.CategoryDto;
+import ru.practicum.ewmmain.exception.ImpossibleOperationException;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.model.Category;
 import ru.practicum.ewmmain.repository.CategoryRepository;
@@ -19,8 +20,12 @@ import static ru.practicum.ewmmain.mapper.CategoryMapper.CATEGORY_MAPPER;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final PublicEventService publicEventService;
 
     public CategoryDto create(CategoryDto dto) {
+        if (categoryRepository.isNameExisting(null, dto.getName())) {
+            throw new ImpossibleOperationException("Category with name=" + dto.getName() + " exists.");
+        }
         return CATEGORY_MAPPER.toDto(categoryRepository.save(CATEGORY_MAPPER.fromDto(dto)));
     }
 
@@ -38,6 +43,9 @@ public class CategoryService {
 
     @Transactional
     public CategoryDto update(Long catId, CategoryDto dto) {
+        if (categoryRepository.isNameExisting(catId, dto.getName())) {
+            throw new ImpossibleOperationException("Category with name=" + dto.getName() + " exists.");
+        }
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Category id=" + catId + " not found."));
         Optional.ofNullable(dto.getName()).ifPresent(category::setName);
@@ -49,6 +57,9 @@ public class CategoryService {
         if (!categoryRepository.existsById(catId)) {
             throw new NotFoundException("Category id=" + catId + " not found.");
         }
+       if (publicEventService.isExistingCategoryId(catId)){
+           throw new ImpossibleOperationException("");
+       }
         categoryRepository.deleteById(catId);
     }
 }

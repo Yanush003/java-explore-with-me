@@ -3,6 +3,7 @@ package ru.practicum.ewmmain.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmmain.dto.ParticipationRequestDto;
+import ru.practicum.ewmmain.exception.ImpossibleOperationException;
 import ru.practicum.ewmmain.exception.InternalServerErrorException;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.model.Event;
@@ -33,16 +34,19 @@ public class ParticipationRequestService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Event id=" + eventId + " not found."));
         if (event.getInitiator().getId().equals(userId)) {
-            throw new InternalServerErrorException("");
+            throw new ImpossibleOperationException("");
         }
         if (!event.getState().equals(PUBLISHED)) {
-            throw new InternalServerErrorException("");
+            throw new ImpossibleOperationException("");
         }
         if (event.getParticipantLimit() > 0) {
             if (event.getParticipantLimit() <= participationRequestRepository
                     .countByEventIdAndStatus(eventId, CONFIRMED)) {
-                throw new InternalServerErrorException("");
+                throw new ImpossibleOperationException("");
             }
+        }
+        if (participationRequestRepository.findByRequester_IdAndEvent_Id(userId, eventId) != null) {
+            throw new ImpossibleOperationException("");
         }
         ParticipationRequest participationRequest = new ParticipationRequest();
         participationRequest.setCreated(LocalDateTime.now());

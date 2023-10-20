@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmmain.dto.UserDto;
+import ru.practicum.ewmmain.exception.ImpossibleOperationException;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.model.User;
 import ru.practicum.ewmmain.repository.UserRepository;
@@ -25,6 +26,9 @@ public class UserService {
 
     @Transactional
     public UserDto create(UserDto request) {
+        if (userRepository.isNameExisting(request.getName())) {
+            throw new ImpossibleOperationException("User with name=" + request.getName() + " exists.");
+        }
         return USER_MAPPER.toDto(userRepository.save(USER_MAPPER.fromNewRequest(request)));
     }
 

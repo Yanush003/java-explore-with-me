@@ -36,4 +36,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findAllByPublic(@Param("text") String text, @Param("categories") List<Long> categories,
                                 @Param("paid") Boolean paid, @Param("rangeStart") LocalDateTime rangeStart,
                                 @Param("rangeEnd") LocalDateTime rangeEnd);
+
+    @Query("select count(e)>0 from Event e where e.category.id = :id")
+    Boolean isExistingCategoryId (Long id);
+
 }

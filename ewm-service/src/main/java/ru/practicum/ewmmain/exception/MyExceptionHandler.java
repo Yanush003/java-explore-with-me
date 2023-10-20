@@ -25,6 +25,17 @@ public class MyExceptionHandler {
                 .build());
     }
 
+    @ExceptionHandler(ImpossibleOperationException.class)
+    public ResponseEntity<ApiError> handleImpossibleOperationException(ImpossibleOperationException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiError.builder()
+                        .status(HttpStatus.CONFLICT)
+                        .reason("ExceptionConflict")
+                        .message(ex.getMessage())
+                        .errorTimestamp(LocalDateTime.now())
+                        .build());
+    }
+
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiError> handlerIllegalArgumentException(BadRequestException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewmmain.constant.EventState;
 import ru.practicum.ewmmain.constant.ParticipationRequestStatus;
 import ru.practicum.ewmmain.dto.*;
+import ru.practicum.ewmmain.exception.ImpossibleOperationException;
 import ru.practicum.ewmmain.exception.InternalServerErrorException;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.model.*;
@@ -98,7 +99,7 @@ public class PrivateEventService {
         }
         if (!(event.getState().equals(CANCELED) ||
                 event.getState().equals(PENDING))) {
-            throw new InternalServerErrorException("");
+            throw new ImpossibleOperationException("");
         }
         if (updateEventUserRequest.getCategory() != null) {
             event.setCategory(categoryRepository.findById(updateEventUserRequest.getCategory()).orElseThrow(
@@ -138,13 +139,13 @@ public class PrivateEventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Event id=" + eventId + " not found."));
         if (!event.getRequestModeration() || event.getParticipantLimit() == 0) {
-            throw new InternalServerErrorException("");
+            throw new ImpossibleOperationException("");
         }
 
         long confirmedReq = participationRequestRepository.countByEventIdAndStatus(eventId, CONFIRMED);
 
         if (event.getParticipantLimit() != 0 && event.getParticipantLimit() <= confirmedReq) {
-            throw new InternalServerErrorException("");
+            throw new ImpossibleOperationException("");
         }
 
         List<ParticipationRequest> requestList = participationRequestRepository

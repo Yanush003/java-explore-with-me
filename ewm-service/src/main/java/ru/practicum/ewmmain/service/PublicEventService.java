@@ -123,4 +123,8 @@ public class PublicEventService {
         dto.setViews(viewStatsDtos.isEmpty() ? 0L : viewStatsDtos.get(0).getHits());
         return dto;
     }
+
+    public Boolean isExistingCategoryId(Long id) {
+        return eventRepository.isExistingCategoryId(id);
+    }
 }
