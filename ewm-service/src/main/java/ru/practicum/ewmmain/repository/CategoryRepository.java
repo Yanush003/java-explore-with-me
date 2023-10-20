@@ -9,5 +9,5 @@ import ru.practicum.ewmmain.model.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("select count(c)>0 from Category c where c.name = :name and (:id is null or c.id !=:id)")
-    Boolean isNameExisting (Long id, String name);
+    Boolean isNameExisting(Long id, String name);
 }

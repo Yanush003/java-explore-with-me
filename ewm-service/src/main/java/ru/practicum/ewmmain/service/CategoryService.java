@@ -57,9 +57,9 @@ public class CategoryService {
         if (!categoryRepository.existsById(catId)) {
             throw new NotFoundException("Category id=" + catId + " not found.");
         }
-       if (publicEventService.isExistingCategoryId(catId)){
-           throw new ImpossibleOperationException("");
-       }
+        if (publicEventService.isExistingCategoryId(catId)) {
+            throw new ImpossibleOperationException("");
+        }
         categoryRepository.deleteById(catId);
     }
 }

@@ -12,7 +12,6 @@ import ru.practicum.ewmmain.dto.EventFullDto;
 import ru.practicum.ewmmain.dto.LocationDto;
 import ru.practicum.ewmmain.dto.UpdateEventAdminRequest;
 import ru.practicum.ewmmain.exception.ImpossibleOperationException;
-import ru.practicum.ewmmain.exception.InternalServerErrorException;
 import ru.practicum.ewmmain.exception.NotFoundException;
 import ru.practicum.ewmmain.exception.WrongDataException;
 import ru.practicum.ewmmain.model.Event;
@@ -76,12 +75,11 @@ public class AdminEventService {
         if (updateEventAdminRequest.getStateAction() != null) {
 
             if (updateEventAdminRequest.getStateAction().equals(PUBLISH_EVENT) && !event.getState().equals(EventState.PENDING)) {
-                throw new ImpossibleOperationException("" + event.getState());
+                throw new ImpossibleOperationException(event.getState().toString());
             }
             if (updateEventAdminRequest.getStateAction().equals(REJECT_EVENT) && event.getState().equals(EventState.PUBLISHED)) {
-                throw new ImpossibleOperationException("" + event.getState());
+                throw new ImpossibleOperationException(event.getState().toString());
             }
-
         }
 
         if (updateEventAdminRequest.getCategory() != null) {

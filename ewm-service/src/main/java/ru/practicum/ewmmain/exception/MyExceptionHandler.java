@@ -17,12 +17,12 @@ public class MyExceptionHandler {
     public ResponseEntity<ApiError> handlerDuplicateEmailException(InternalServerErrorException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiError.builder()
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .reason("InternalServerErrorException")
-                .message(ex.getClass() + " - " + ex.getMessage())
-                .errors(ex.getStackTrace())
-                .errorTimestamp(LocalDateTime.now())
-                .build());
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .reason("InternalServerErrorException")
+                        .message(ex.getClass() + " - " + ex.getMessage())
+                        .errors(ex.getStackTrace())
+                        .errorTimestamp(LocalDateTime.now())
+                        .build());
     }
 
     @ExceptionHandler(ImpossibleOperationException.class)
@@ -40,21 +40,21 @@ public class MyExceptionHandler {
     public ResponseEntity<ApiError> handlerIllegalArgumentException(BadRequestException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiError.builder()
-                .status(HttpStatus.BAD_REQUEST)
-                .reason("BadRequestException")
-                .message(ex.getMessage())
-                .errorTimestamp(LocalDateTime.now())
-                .build());
+                        .status(HttpStatus.BAD_REQUEST)
+                        .reason("BadRequestException")
+                        .message(ex.getMessage())
+                        .errorTimestamp(LocalDateTime.now())
+                        .build());
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ApiError> handlerIllegalArgumentException(NotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ApiError.builder()
-                .status(HttpStatus.NOT_FOUND)
-                .reason("NotFoundException")
-                .message(ex.getMessage())
-                .errorTimestamp(LocalDateTime.now())
-                .build());
+                        .status(HttpStatus.NOT_FOUND)
+                        .reason("NotFoundException")
+                        .message(ex.getMessage())
+                        .errorTimestamp(LocalDateTime.now())
+                        .build());
     }
 }
