@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -19,7 +20,7 @@ public class NewCompilationDto { //description: Подборка событий
 
     private Boolean pinned; //default: false Закреплена ли подборка на главной странице сайта
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 1, max = 50)
     private String title; //Заголовок подборки
 }
