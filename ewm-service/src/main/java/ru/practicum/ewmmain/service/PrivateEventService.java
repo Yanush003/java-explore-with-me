@@ -30,6 +30,7 @@ import static ru.practicum.ewmmain.mapper.ParticipationRequestMapper.REQUEST_MAP
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PrivateEventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
@@ -58,7 +59,6 @@ public class PrivateEventService {
         return EVENT_MAPPER.toFullDto(eventRepository.save(event));
     }
 
-    @Transactional(readOnly = true)
     public List<EventShortDto> getAllPrivate(Long userId, int from, int size) {
         Pageable pageable = PageRequest.of(from, size);
         List<Event> events = eventRepository.findAllByInitiatorId(userId, pageable);
@@ -67,7 +67,6 @@ public class PrivateEventService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public EventFullDto getByIdPrivate(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Event id=" + eventId + " not found."));
@@ -77,7 +76,6 @@ public class PrivateEventService {
         return EVENT_MAPPER.toFullDto(event);
     }
 
-    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getParticipationRequests(Long userId, Long eventId) {
         userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User id=" + userId + " not found."));
         eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Event id=" + eventId + " not found."));

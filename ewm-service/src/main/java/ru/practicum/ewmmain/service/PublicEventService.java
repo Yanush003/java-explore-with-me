@@ -33,12 +33,12 @@ import static ru.practicum.ewmmain.mapper.EventMapper.EVENT_MAPPER;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class PublicEventService {
     private final EventRepository eventRepository;
     private final ParticipationRequestRepository participationRequestRepository;
     private final StatsClient statsClient;
 
-    @Transactional(readOnly = true)
     public List<EventShortDto> getAllPublic(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                             LocalDateTime rangeEnd, Boolean onlyAvailable, SortMode sort,
                                             int from, int size, HttpServletRequest request) {
@@ -100,7 +100,6 @@ public class PublicEventService {
         return eventShortDtos.subList(from, toIndex);
     }
 
-    @Transactional(readOnly = true)
     public EventFullDto getByIdPublic(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Event id=" + eventId + " not found."));

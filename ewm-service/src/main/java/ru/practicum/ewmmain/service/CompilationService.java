@@ -23,6 +23,7 @@ import static ru.practicum.ewmmain.mapper.CompilationMapper.COMPILATION_MAPPER;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
@@ -38,7 +39,6 @@ public class CompilationService {
         return COMPILATION_MAPPER.toDto(compilationRepository.save(COMPILATION_MAPPER.fromDto(dto, events)));
     }
 
-    @Transactional(readOnly = true)
     public List<CompilationDto> getAll(Boolean pinned, int from, int size) {
         Pageable pageable = PageRequest.of(from, size);
         return compilationRepository.findAllByPinnedIsNullOrPinned(pinned, pageable).stream()
@@ -46,7 +46,6 @@ public class CompilationService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public CompilationDto getById(Long compId) {
         return COMPILATION_MAPPER.toDto(compilationRepository.findById(compId)
                 .orElseThrow(() -> new NotFoundException("Compilation id=" + compId + " not found.")));

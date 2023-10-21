@@ -18,10 +18,12 @@ import static ru.practicum.ewmmain.mapper.CategoryMapper.CATEGORY_MAPPER;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final PublicEventService publicEventService;
 
+    @Transactional
     public CategoryDto create(CategoryDto dto) {
         if (categoryRepository.isNameExisting(null, dto.getName())) {
             throw new ImpossibleOperationException("Category with name=" + dto.getName() + " exists.");
@@ -35,7 +37,6 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
     public CategoryDto getById(Long catId) {
         return CATEGORY_MAPPER.toDto(categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Category id=" + catId + " not found.")));

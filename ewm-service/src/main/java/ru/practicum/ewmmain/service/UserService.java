@@ -21,6 +21,7 @@ import static ru.practicum.ewmmain.mapper.UserMapper.USER_MAPPER;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
 
@@ -32,7 +33,6 @@ public class UserService {
         return USER_MAPPER.toDto(userRepository.save(USER_MAPPER.fromNewRequest(request)));
     }
 
-    @Transactional(readOnly = true)
     public List<UserDto> getAll(List<Long> ids, int from, int size) {
         Pageable pageable = PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "id"));
         Page<User> users;
