@@ -57,4 +57,15 @@ public class MyExceptionHandler {
                         .errorTimestamp(LocalDateTime.now())
                         .build());
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiError> handleForbiddenException(ForbiddenException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(ApiError.builder()
+                        .status(HttpStatus.FORBIDDEN)
+                        .reason("ForbiddenException")
+                        .message(ex.getMessage())
+                        .errorTimestamp(LocalDateTime.now())
+                        .build());
+    }
 }
