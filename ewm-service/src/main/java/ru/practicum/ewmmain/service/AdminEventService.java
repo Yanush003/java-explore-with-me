@@ -58,7 +58,7 @@ public class AdminEventService {
                 rangeEnd.format(DateTimeFormatter.ofPattern(DATETIME_FORMAT)),
                 eventUrls,
                 true);
-        return events.stream().map(event->EVENT_MAPPER.toFullDto(event, participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED))).peek(eventFullDto -> {
+        return events.stream().map(event -> EVENT_MAPPER.toFullDto(event, participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED))).peek(eventFullDto -> {
             Optional<ViewStatsDto> viewStatsDto = viewStatsDtos.stream().filter(viewStatsDto1 -> viewStatsDto1.getUri().equals("/events/" + eventFullDto.getId())).findFirst();
             eventFullDto.setViews(viewStatsDto.map(ViewStatsDto::getHits).orElse(0L));
         }).peek(eventFullDto -> eventFullDto.setConfirmedRequests(participationRequestRepository.countByEventIdAndStatus(eventFullDto.getId(), CONFIRMED))).collect(Collectors.toList());
