@@ -117,8 +117,7 @@ public class PublicEventService {
                 LocalDateTime.now().minusYears(100).format(DateTimeFormatter.ofPattern(DATETIME_FORMAT)),
                 LocalDateTime.now().plusYears(100).format(DateTimeFormatter.ofPattern(DATETIME_FORMAT)),
                 eventUrls, true);
-        EventFullDto dto = EVENT_MAPPER.toFullDto(event);
-        dto.setConfirmedRequests(participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED));
+        EventFullDto dto = EVENT_MAPPER.toFullDto(event, participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED));
         dto.setViews(viewStatsDtos.isEmpty() ? 0L : viewStatsDtos.get(0).getHits());
         return dto;
     }

@@ -56,7 +56,7 @@ public class PrivateEventService {
         event.setParticipantLimit(newEventDto.getParticipantLimit() == null ? 0 : newEventDto.getParticipantLimit());
         event.setRequestModeration(newEventDto.getRequestModeration() == null || newEventDto.getRequestModeration());
         event.setState(PENDING);
-        return EVENT_MAPPER.toFullDto(eventRepository.save(event));
+        return EVENT_MAPPER.toFullDto(eventRepository.save(event), 0L);
     }
 
     public List<EventShortDto> getAllPrivate(Long userId, int from, int size) {
@@ -73,7 +73,7 @@ public class PrivateEventService {
         if (!userId.equals(event.getInitiator().getId())) {
             throw new NotFoundException("Event id=" + eventId + " not found");
         }
-        return EVENT_MAPPER.toFullDto(event);
+        return EVENT_MAPPER.toFullDto(event, participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED));
     }
 
     public List<ParticipationRequestDto> getParticipationRequests(Long userId, Long eventId) {
@@ -125,9 +125,10 @@ public class PrivateEventService {
                     break;
             }
         }
-        return EVENT_MAPPER.toFullDto(eventRepository.save(event));
+        return EVENT_MAPPER.toFullDto(eventRepository.save(event), participationRequestRepository.countByEventIdAndStatus(event.getId(), CONFIRMED));
     }
 
+    @Transactional
     public EventRequestStatusUpdateResult updateParticipationRequests(
             Long userId, Long eventId,
             EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
@@ -175,6 +176,8 @@ public class PrivateEventService {
                     if (confirmedReq < event.getParticipantLimit()) {
                         request.setStatus(CONFIRMED);
                         confirmedReq++;
+                        event.setConfirmedRequests(confirmedReq);
+                        eventRepository.save(event);
                         result.getConfirmedRequests().add(REQUEST_MAPPER.toDto(request));
                     } else {
                         request.setStatus(REJECTED);

@@ -20,7 +20,8 @@ public interface EventMapper {
     @Mapping(target = "location", source = "location")
     Event fromDto(NewEventDto dto, Category category, Location location);
 
-    EventFullDto toFullDto(Event event);
+    @Mapping(target = "confirmedRequests", source = "confirmedRequests")
+    EventFullDto toFullDto(Event event, Long confirmedRequests);
 
     EventShortDto toShortDto(Event event);
 }
